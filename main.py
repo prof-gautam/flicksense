@@ -5,8 +5,23 @@ from fastapi import FastAPI
 import pandas as pd
 from models.collaborative_filtering import CollaborativeFilteringModel
 from models.user_similarity import UserSimilarityModel
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+    "chrome-extension://idgfmgbkobhkgodkhbafbmhpccilpaca"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Ensure you're pointing to the correct paths for your CSV files
 df_movies = pd.read_csv("data/movies.csv")
